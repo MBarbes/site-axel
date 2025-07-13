@@ -4,14 +4,38 @@ const AdminLogin = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simple authentification (à remplacer par une vraie authentification en production)
-    if (credentials.username === 'admin' && credentials.password === 'admin123') {
-      localStorage.setItem('adminAuth', 'true');
-      onLogin(true);
-    } else {
-      setError('Identifiants incorrects');
+    setError('');
+
+    // --- VULNÉRABILITÉ DE SÉCURITÉ MAJEURE ---
+    // Le code original vérifiait le mot de passe directement dans le navigateur.
+    // N'IMPORTE QUI pouvait lire le code source et trouver les identifiants.
+    // Une authentification DOIT TOUJOURS se faire côté serveur.
+
+    // Simulation d'un appel à un backend sécurisé
+    try {
+      // Dans une vraie application, vous feriez un appel à votre API ici
+      // Exemple : const response = await fetch('/api/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(credentials),
+      // });
+
+      // Pour la démonstration, nous allons simuler une réponse.
+      // REMPLACEZ CECI par une vraie logique de backend.
+      if (credentials.username === 'admin' && credentials.password === 'password') { // Mot de passe pour l'exemple
+        // Le backend répondrait avec un token sécurisé (ex: JWT)
+        // que l'on stockerait de manière sécurisée (ex: cookie httpOnly)
+        localStorage.setItem('adminAuth', 'true'); // Ceci est encore une simplification
+        onLogin(true);
+      } else {
+        // const errorData = await response.json();
+        // setError(errorData.message || 'Identifiants incorrects');
+        setError('Identifiants incorrects (ceci est une simulation)');
+      }
+    } catch (err) {
+      setError('Une erreur est survenue lors de la connexion.');
     }
   };
 
