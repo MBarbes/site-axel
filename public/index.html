@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Farceto Home Renov, artisan plaquiste à Longvilliers, Pas-de-Calais, propose des prestations complètes de plaquisterie et de rénovation intérieure.">
+  <meta name="keywords" content="plaquisterie, faux plafond, cloison sèche, isolation, menuiserie intérieur, enduits, rénovation">
+  <meta name="author" content="Farceto Home Renov">
+  <title>Farceto Home Renov | Plaquisterie et Rénovation</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-image: url('img/fond.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    /* Styles pour le formulaire à label flottant */
+    .input-field {
+      border: none;
+      border-bottom: 2px solid #d1d5db; /* gray-300 */
+      background-color: transparent;
+      padding: 0.75rem 0;
+      font-size: 1rem;
+      color: #111827; /* gray-900 */
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus {
+      border-bottom-color: #16A34A; /* green-600 */
+    }
+    .floating-label {
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      font-size: 1rem;
+      color: #6B7280; /* gray-500 */
+      pointer-events: none;
+      transition: all 0.2s ease-out;
+    }
+    .peer:placeholder-shown + .floating-label {
+      top: 0.75rem;
+      font-size: 1rem;
+    }
+    .peer:focus + .floating-label,
+    .peer:not(:placeholder-shown) + .floating-label {
+      top: -0.75rem;
+      font-size: 0.75rem;
+      color: #16A34A; /* green-600 */
+    }
+    /* Style pour le fondu du message de statut */
+    #form-status-message > div {
+        transition: opacity 0.5s ease-out;
+    }
+  </style>
+</head>
+<body class="text-gray-900 overflow-x-hidden">
+  <!-- Top Bar Option 1: White + Subtle Border -->
+  <div class="bg-white text-gray-700 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center py-1 text-sm">
+      <div class="flex flex-wrap gap-x-4 gap-y-3">
+        <span><i class="fa-solid fa-location-dot mr-1 text-green-700"></i> 4 Rue de Cormont, 62630 Longvilliers</span>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-3">
+        <span><i class="fa-solid fa-phone mr-1 text-green-700"></i> 06 50 52 20 12</span>
+        <span><i class="fa-solid fa-envelope mr-1 text-green-700"></i> farcetohomerenove@gmail.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Menu (fond vert foncé) -->
+  <nav class="sticky top-0 z-50 bg-green-800 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center py-4">
+      <a href="index.html">
+        <!-- LOGO AGRANDI -->
+        <img src="img/logo.png" alt="Logo Farceto Home Renov" class="h-16"> <!-- h-16 = 64px -->
+      </a>
+      <ul class="flex flex-col sm:flex-row gap-4 items-center"> <!-- Ajout de items-center pour alignement vertical mobile -->
+        <li>
+          <a href="#combined-services" class="py-2 px-4 rounded-md text-white hover:bg-green-700 transition">Services</a>
+        </li>
+        <li>
+          <a href="#localisation" class="py-2 px-4 rounded-md text-white hover:bg-green-700 transition">Zones d'Intervention</a>
+        </li>
+        <li>
+          <a href="#contact" class="py-2 px-4 rounded-md text-white hover:bg-green-700 transition">Contact</a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/people/Farceto-Home-Renov/61551721910151/?_rdr" target="_blank"
+             class="py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition">
+            <i class="fa-brands fa-facebook-f text-xl"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Combined Services Section -->
+  <section id="combined-services" class="relative bg-green-50 max-w-7xl mx-auto my-8 flex flex-col md:flex-row gap-8 p-8 rounded-lg shadow-lg" data-aos="fade-up">
+    <!-- Décoration SVG -->
+    <div class="absolute left-0 top-0 -z-10" style="width:300px; height:300px; overflow:hidden;">
+      <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="150" cy="150" r="150" fill="#D1FAE5" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="md:w-2/3 space-y-8">
+      <!-- Nos Services de Plaquisterie -->
+      <div class="bg-white shadow-lg p-12 rounded-lg" data-aos="fade-right">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6" data-aos="fade-right" data-aos-duration="1500">
+          Nos Services de Plaquisterie
+        </h2>
+        <p class="text-center text-gray-600 mb-6" data-aos="fade-left" data-aos-duration="1500">
+          Nous proposons des prestations complètes pour vos travaux intérieurs :
+        </p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fa-solid fa-hammer text-3xl text-green-600 mr-4 flex-shrink-0"></i> <!-- Ajout flex-shrink-0 -->
+                <span>Installation de plaques de placo</span>
+            </li>
+            <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fa-solid fa-wrench text-3xl text-green-600 mr-4 flex-shrink-0"></i>
+                <span>Réparation et entretien de placo</span>
+            </li>
+            <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fa-solid fa-snowflake text-3xl text-green-600 mr-4 flex-shrink-0"></i>
+                <span>Isolation acoustique avec cloisons sèches</span>
+            </li>
+            <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fa-solid fa-border-all text-3xl text-green-600 mr-4 flex-shrink-0"></i>
+                <span>Faux plafond (dalle 600x600)</span>
+            </li>
+            <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="500">
+                <i class="fa-solid fa-border-style text-3xl text-green-600 mr-4 flex-shrink-0"></i>
+                <span>Cloison sèche, contre cloison, cloison de distribution</span>
+            </li>
+            <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="600">
+                <i class="fa-solid fa-temperature-low text-3xl text-green-600 mr-4 flex-shrink-0"></i>
+                <span>Isolation de comble perdu en laine soufflée</span>
+            </li>
+        </ul>
+      </div>
+      <!-- Autres Services -->
+      <div class="bg-white shadow-lg p-12 rounded-lg" data-aos="fade-left">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Autres Services</h2>
+        <p class="text-center text-gray-600 mb-6">
+          Découvrez également nos autres prestations pour compléter vos projets de rénovation :
+        </p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center justify-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="slide-up" data-aos-delay="100">
+            <i class="fa-solid fa-door-open text-3xl text-green-600 mr-4"></i>
+            <span>Pose de menuiserie intérieur</span>
+          </li>
+          <li class="bg-green-100 text-gray-700 p-6 rounded-lg shadow-lg flex items-center justify-center hover:shadow-xl transition transform hover:-translate-y-1" data-aos="slide-down" data-aos-delay="200">
+            <i class="fa-solid fa-paint-roller text-3xl text-green-600 mr-4"></i>
+            <span>Enduits, calicot et ratissage</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Bloc Demande de Service Personnalisé -->
+    <div class="md:w-1/3" data-aos="flip-up">
+      <div class="bg-gradient-to-r from-green-600 to-green-500 text-white text-center p-12 rounded-lg h-full flex flex-col justify-center shadow-lg">
+        <h2 class="text-3xl font-bold mb-4">Un besoin particulier ?</h2>
+        <p class="text-lg mb-6">
+          Contactez-nous pour une demande de service personnalisé et recevez un devis adapté à votre projet.
+        </p>
+        <a href="#contact" class="inline-block bg-white text-green-600 px-6 py-3 rounded-full text-lg hover:bg-gray-100 transition">
+          Demandez votre devis personnalisé
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zones d'Intervention Section -->
+  <section id="localisation" class="bg-green-50 my-8 p-12 rounded-lg shadow-lg max-w-7xl mx-auto relative" data-aos="fade-up">
+    <div class="absolute right-0 top-0 -z-10" style="width:100px; height:100px; overflow:hidden;">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="20" fill="#D1FAE5" opacity="0.3"/>
+      </svg>
+    </div>
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Nos Zones d'Intervention</h2>
+    <div id="map" class="h-80 rounded-lg shadow-lg"></div>
+  </section>
+
+  <!-- Carousel Section -->
+  <section id="carousel" class="bg-green-50 relative max-w-7xl mx-auto my-8 overflow-hidden rounded-lg shadow-lg" data-aos="fade-down">
+    <div class="carousel flex transition-transform duration-500 ease-in-out">
+      <!-- Assurez-vous que les chemins d'images sont corrects et que les images existent -->
+      <div class="carousel-slide flex-shrink-0 w-full">
+        <img src="img/image1.jpg" alt="Exemple de réalisation 1" class="w-full h-80 object-cover rounded-lg">
+      </div>
+      <div class="carousel-slide flex-shrink-0 w-full">
+        <img src="img/image2.jpg" alt="Exemple de réalisation 2" class="w-full h-80 object-cover rounded-lg">
+      </div>
+      <div class="carousel-slide flex-shrink-0 w-full">
+        <img src="img/image3.jpg" alt="Exemple de réalisation 3" class="w-full h-80 object-cover rounded-lg">
+      </div>
+    </div>
+    <button id="prev" class="carousel-control absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800/70 text-white p-3 rounded-full hover:bg-gray-800 z-10 transition-colors">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="next" class="carousel-control absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800/70 text-white p-3 rounded-full hover:bg-gray-800 z-10 transition-colors">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </section>
+
+  <!-- Contact & À Propos Section -->
+  <section id="contact" class="relative bg-green-50 max-w-7xl mx-auto my-8 flex flex-col md:flex-row gap-8 p-8 rounded-lg shadow-lg" data-aos="fade-up">
+    <div class="absolute right-0 top-0 -z-10" style="width:100px; height:100px; overflow:hidden;">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+         <rect width="100" height="100" rx="20" fill="#D1FAE5" opacity="0.3"/>
+      </svg>
+    </div>
+    <!-- À Propos -->
+    <div class="about-box bg-white p-8 rounded-lg shadow-lg flex-1" data-aos="slide-right" data-aos-duration="1500">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">
+        <i class="fa-solid fa-user mr-2"></i> À Propos de Nous
+      </h2>
+      <p class="text-gray-600 mb-4">
+        Bienvenue chez Farceto Home Renov, votre <strong>artisan plaquiste expert</strong> et partenaire privilégié pour tous vos travaux de plâtrerie et de rénovation intérieure à Longvilliers (62) et ses environs. Passionnés par notre métier, nous mettons notre savoir-faire et notre souci du détail au service de vos projets, qu'il s'agisse de neuf ou de rénovation.
+      </p>
+      <p class="text-gray-600 mb-4">
+        <strong>Notre Mission :</strong> Transformer vos espaces de vie ou de travail en lieux fonctionnels, esthétiques et confortables. Nous croyons qu'un travail de plâtrerie bien exécuté est la base d'un intérieur réussi, c'est pourquoi nous abordons chaque chantier avec rigueur et engagement envers la qualité.
+      </p>
+      <p class="text-gray-600 mb-2">
+         <strong>Nos Services incluent notamment :</strong>
+      </p>
+      <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
+        <li>Pose de plaques de plâtre (cloisons, doublages, plafonds standards)</li>
+        <li>Installation de faux plafonds en dalles</li>
+        <li>Isolation thermique et acoustique (intérieure)</li>
+        <li>Aménagement de combles</li>
+        <li>Finitions (bandes à joint, préparation avant peinture)</li>
+        <li>Pose de menuiserie intérieure</li>
+        <li>Enduits et ratissage</li>
+      </ul>
+      <p class="text-gray-600">
+        Chez Farceto Home Renov, la confiance et la satisfaction client sont au cœur de notre démarche. Nous vous écoutons attentivement, vous conseillons et réalisons vos travaux avec précision, dans le respect des délais convenus. Faites confiance à notre savoir-faire pour concrétiser vos envies.
+      </p>
+    </div>
+
+    <!-- Formulaire de Contact Modernisé -->
+    <div class="contact-box bg-white p-8 rounded-lg shadow-lg flex-1" data-aos="slide-left" data-aos-duration="1500">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">
+        <i class="fa-solid fa-envelope mr-2"></i> Contactez-Nous
+      </h2>
+
+      <!-- Conteneur pour le message de statut (succès/erreur) -->
+      <div id="form-status-message" class="mb-4"></div>
+
+      <!-- Formulaire configuré pour FormSubmit -->
+      <form id="contact-form" action="https://formsubmit.co/farcetohomerenove@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-6">
+
+        <!-- Champs cachés pour FormSubmit Configuration -->
+        <input type="hidden" name="_next" value="https://farcetohomerenov.netlify.app/?form-status=success#contact">
+        <input type="text" name="_honey" style="display:none"> <!-- Honeypot -->
+        <input type="hidden" name="_captcha" value="true"> <!-- Captcha activé -->
+        <input type="hidden" name="_subject" value="Nouveau message depuis Farceto Home Renov!"> <!-- Sujet email -->
+
+        <div class="text-sm text-gray-600">* Champs obligatoires</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="relative">
+            <input type="text" name="nom_prenom" id="nom_prenom" placeholder=" " required class="input-field peer w-full">
+            <label for="nom_prenom" class="floating-label">Nom et prénom*</label>
+          </div>
+          <div class="relative">
+            <input type="email" name="email" id="email" placeholder=" " required class="input-field peer w-full">
+            <label for="email" class="floating-label">E-mail*</label>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="relative">
+            <input type="tel" name="telephone" id="telephone" placeholder=" " required class="input-field peer w-full">
+            <label for="telephone" class="floating-label">Téléphone*</label>
+          </div>
+          <div class="relative">
+            <input type="text" name="adresse" id="adresse" placeholder=" " class="input-field peer w-full">
+            <label for="adresse" class="floating-label">Adresse</label>
+          </div>
+        </div>
+        <div class="relative">
+          <textarea name="message" id="message" rows="4" placeholder=" " required class="input-field peer w-full"></textarea>
+          <label for="message" class="floating-label">Message*</label>
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex-grow"> <!-- Utilisation de flex-grow pour prendre l'espace -->
+            <input type="file" name="attachment" id="images" class="hidden">
+            <label for="images" class="inline-flex items-center cursor-pointer bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition whitespace-nowrap"> <!-- Ajout de whitespace-nowrap -->
+              <i class="fa-solid fa-paperclip mr-2"></i> Joindre un fichier
+            </label>
+            <span id="file-chosen" class="text-sm text-gray-500 ml-2 inline-block align-middle">Aucun fichier choisi</span> <!-- Ajout de inline-block align-middle -->
+          </div>
+          <div class="flex items-center flex-shrink-0"> <!-- Ajout de flex-shrink-0 -->
+            <input type="checkbox" id="rappel" name="demande_rappel" value="Oui" class="mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+            <label for="rappel" class="text-gray-700 whitespace-nowrap">Demander à être rappelé</label> <!-- Ajout de whitespace-nowrap -->
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition text-lg font-semibold">Envoyer le message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Section Social Media -->
+  <section id="social" class="bg-green-600 py-4">
+    <div class="max-w-7xl mx-auto text-center">
+      <a href="https://www.facebook.com/people/Farceto-Home-Renov/61551721910151/?_rdr" target="_blank" class="text-white text-2xl hover:text-green-200 transition">
+        <i class="fa-brands fa-facebook-f"></i> Suivez-nous sur Facebook
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center p-4">
+    <p>© 2024 Farceto Home Renov | Plaquiste à Longvilliers, Pas-de-Calais | Tous droits réservés</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // --- INITIALISATION GLOBALE ---
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: false,
+      mirror: true
+    });
+
+    window.addEventListener('scroll', () => {
+      AOS.refresh();
+    });
+
+    // --- LOGIQUE SPÉCIFIQUE AU CHARGEMENT DU DOM ---
+    document.addEventListener("DOMContentLoaded", function() {
+
+      // --- AFFICHAGE DU MESSAGE DE SUCCÈS DU FORMULAIRE ---
+      const statusMessageContainer = document.getElementById('form-status-message');
+      if (statusMessageContainer) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const formStatus = urlParams.get('form-status');
+
+        if (formStatus === 'success') {
+          // Afficher le message de succès
+          statusMessageContainer.innerHTML = `
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded relative" role="alert">
+              <strong class="font-bold">Message envoyé !</strong>
+              <span class="block sm:inline"> Merci de nous avoir contactés. Nous reviendrons vers vous rapidement.</span>
+            </div>
+          `;
+
+          // Faire disparaître le message après 7 secondes
+          setTimeout(() => {
+             const successBox = statusMessageContainer.querySelector('div');
+             if (successBox) {
+                 successBox.style.opacity = '0';
+                 // Supprimer l'élément après la transition pour libérer l'espace
+                 setTimeout(() => {
+                     statusMessageContainer.innerHTML = ''; // Vide le conteneur
+                 }, 500); // Délai égal à la durée de la transition CSS (0.5s)
+             }
+          }, 7000); // 7 secondes
+
+          // Nettoyer l'URL (enlever ?form-status=success) sans recharger
+          const cleanUrl = window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      }
+
+      // --- SMOOTH SCROLLING ---
+      const navLinks = document.querySelectorAll("nav ul li a[href^='#'], a[href^='#'].inline-block");
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          const href = this.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            e.preventDefault();
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+               const headerOffset = document.querySelector('nav.sticky')?.offsetHeight || 70; // Estimer si non trouvé
+               const elementPosition = targetElement.getBoundingClientRect().top;
+               const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+               window.scrollTo({
+                   top: offsetPosition,
+                   behavior: "smooth"
+               });
+            }
+          }
+        });
+      });
+
+      // --- CAROUSEL LOGIC ---
+      const carousel = document.querySelector(".carousel");
+      const slides = document.querySelectorAll(".carousel-slide");
+      const nextBtn = document.getElementById("next");
+      const prevBtn = document.getElementById("prev");
+      const carouselContainer = document.getElementById('carousel');
+
+      if (carousel && slides.length > 0 && nextBtn && prevBtn && carouselContainer) {
+          let index = 0;
+          const totalSlides = slides.length;
+          let autoPlayInterval;
+
+          function updateCarousel() {
+            carousel.style.transform = "translateX(" + (-index * 100) + "%)";
+          }
+
+          function nextSlide() {
+            index = (index + 1) % totalSlides;
+            updateCarousel();
+          }
+
+          function prevSlide() {
+            index = (index - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+          }
+
+          function startAutoPlay() {
+             clearInterval(autoPlayInterval);
+             autoPlayInterval = setInterval(nextSlide, 5000);
+          }
+
+          nextBtn.addEventListener("click", () => { nextSlide(); startAutoPlay(); });
+          prevBtn.addEventListener("click", () => { prevSlide(); startAutoPlay(); });
+          carouselContainer.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+          carouselContainer.addEventListener('mouseleave', startAutoPlay);
+
+          updateCarousel();
+          startAutoPlay();
+      } else {
+          console.warn("Carousel elements not fully found.");
+      }
+
+      // --- LEAFLET MAP INITIALIZATION ---
+      if(document.getElementById('map')) {
+        var lat = 50.54466591120554, lon = 1.7287692171836715;
+        var map = L.map('map', { scrollWheelZoom: false }).setView([lat, lon], 9);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([lat, lon]).addTo(map)
+            .bindPopup('<b>Farceto Home Renov</b><br>4 Rue de Cormont, 62630 Longvilliers')
+            .openPopup();
+
+        L.circle([lat, lon], {
+            color: '#15803D', fillColor: '#4ADE80', fillOpacity: 0.2, radius: 40000
+         }).addTo(map).bindPopup("Zone d'intervention principale (environ 40km)");
+      }
+
+      // --- FILE INPUT DISPLAY ---
+      const fileInput = document.getElementById('images');
+      const fileChosenSpan = document.getElementById('file-chosen');
+      if (fileInput && fileChosenSpan) {
+        fileInput.addEventListener('change', function() {
+          if (this.files.length > 0) {
+            if (this.files.length === 1) {
+              let fileName = this.files[0].name;
+              if (fileName.length > 25) { fileName = fileName.substring(0, 22) + '...'; }
+              fileChosenSpan.textContent = fileName;
+            } else {
+              fileChosenSpan.textContent = `${this.files.length} fichiers sélectionnés`;
+            }
+          } else {
+            fileChosenSpan.textContent = 'Aucun fichier choisi';
+          }
+        });
+      }
+
+    }); // --- Fin du DOMContentLoaded ---
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{
+  "prices": {
+    "placo": {
+      "name": "Plaquisterie",
+      "priceMin": 25,
+      "priceMax": 35,
+      "description": "Pose de placo avec fournitures",
+      "unit": "€/m²",
+      "category": "renovation"
+    },
+    "isolation": {
+      "name": "Isolation thermique",
+      "priceMin": 150,
+      "priceMax": 200,
+      "description": "Isolation extérieure sous enduit",
+      "unit": "€/m²",
+      "category": "isolation"
+    },
+    "cloison": {
+      "name": "Cloison séparative",
+      "priceMin": 27,
+      "priceMax": 60,
+      "description": "Cloison en placo avec pose",
+      "unit": "€/m²",
+      "category": "amenagement"
+    }
+  },
+  "content": {
+    "hero": {
+      "title": "Rénovation et Plaquisterie à Longvilliers",
+      "subtitle": "Votre expert en travaux de rénovation intérieure",
+      "description": "Spécialiste en plaquisterie, isolation et cloisons. Service de qualité et devis gratuit.",
+      "ctaText": "Obtenez votre devis gratuit",
+      "backgroundImage": "/img/fond.png"
+    },
+    "about": {
+      "title": "À propos de nous",
+      "description": "Entreprise familiale spécialisée dans la rénovation intérieure depuis plus de 10 ans. Notre équipe d'artisans qualifiés vous accompagne dans tous vos projets de rénovation.",
+      "experience": "10+ ans d'expérience",
+      "projects": "500+ projets réalisés"
+    },
+    "services": {
+      "title": "Nos Services",
+      "description": "Découvrez notre gamme complète de services de rénovation",
+      "subtitle": "Des solutions adaptées à tous vos besoins"
+    },
+    "contact": {
+      "title": "Contactez-nous",
+      "address": "Longvilliers, France",
+      "phone": "01 23 45 67 89",
+      "email": "contact@renovation-longvilliers.fr",
+      "hours": "Lun-Ven: 8h-18h, Sam: 9h-17h"
+    }
+  },
+  "images": {
+    "logo": [
+      {
+        "id": "logo-main",
+        "name": "logo.png",
+        "path": "/img/logo.png",
+        "category": "logo",
+        "alt": "Logo de l'entreprise"
+      }
+    ],
+    "gallery": [
+      {
+        "id": "gallery-1",
+        "name": "image1.jpg",
+        "path": "/img/image1.jpg",
+        "category": "gallery",
+        "alt": "Réalisation plaquisterie"
+      },
+      {
+        "id": "gallery-2",
+        "name": "image2.jpg",
+        "path": "/img/image2.jpg",
+        "category": "gallery",
+        "alt": "Isolation thermique"
+      },
+      {
+        "id": "gallery-3",
+        "name": "image3.jpg",
+        "path": "/img/image3.jpg",
+        "category": "gallery",
+        "alt": "Cloison moderne"
+      }
+    ],
+    "background": [
+      {
+        "id": "bg-main",
+        "name": "fond.png",
+        "path": "/img/fond.png",
+        "category": "background",
+        "alt": "Image de fond"
+      }
+    ]
+  },
+  "settings": {
+    "siteName": "Rénovation Longvilliers",
+    "companyName": "Expert Rénovation",
+    "tagline": "Votre partenaire rénovation de confiance",
+    "theme": {
+      "primaryColor": "#059669",
+      "secondaryColor": "#047857",
+      "accentColor": "#10b981"
+    },
+    "seo": {
+      "metaTitle": "Rénovation et Plaquisterie à Longvilliers - Devis Gratuit",
+      "metaDescription": "Expert en rénovation intérieure, plaquisterie, isolation et cloisons à Longvilliers. Devis gratuit et travaux de qualité garantis.",
+      "keywords": "rénovation, plaquisterie, isolation, cloison, Longvilliers, devis gratuit"
+    }
+  },
+  "metadata": {
+    "lastUpdated": "2025-01-13",
+    "version": "1.0.0",
+    "description": "Base de données simulée pour l'administration du site"
+  }
+}
